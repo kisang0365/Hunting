@@ -1,7 +1,9 @@
 package com.example.administrator.hunting;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 
 /**
@@ -14,13 +16,28 @@ public class TestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
-        Button button1 = (Button) findViewById(R.id.button1);
-        Button button2 = (Button) findViewById(R.id.button2);
-        Button button3 = (Button) findViewById(R.id.button3);
-        Button button4 = (Button) findViewById(R.id.button4);
+    }
 
+    public void onClick(View view){
 
-
+        switch (view.getId()){
+            case R.id.button1:
+                Intent intent =  new Intent(this, LoginActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.button2:
+                intent =  new Intent(this, RegisterAcitivty.class);
+                startActivity(intent);
+                break;
+            case R.id.button3:
+                //intent =  new Intent(this, LoginActivity.class);
+                //startActivity(intent);
+                break;
+            case R.id.button4:
+                //intent =  new Intent(this, LoginActivity.class);
+                //startActivity(intent);
+                break;
+        }
     }
 }
 

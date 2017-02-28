@@ -4,10 +4,10 @@
     android:layout_height="wrap_content"
     android:layout_gravity = "center">
 
-    <Button
-        android:id  ="@+id/btn_login"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:text = "헌팅넷 접속" />
+    <ImageView
+        android:id  ="@+id/iv_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/login" />
 
 </LinearLayout>

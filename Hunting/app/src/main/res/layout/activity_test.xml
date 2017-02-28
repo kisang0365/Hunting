@@ -9,26 +9,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/button1"
-        android:text="Button Example" />
+        android:text="들어가기페이지"
+        android:onClick = "onClick"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/button2"
-        android:text="Button Example" />
+        android:text="회원가입페이지"
+        android:onClick = "onClick"/>
 
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/button3"
-        android:text="Button Example" />
+        android:text="리스트받아온페이지"
+        android:onClick = "onClick"/>
 
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/button4"
-        android:text="Button Example" />
+        android:text="상세정보페이지"
+        android:onClick = "onClick"/>
 
 </LinearLayout>
