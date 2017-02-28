@@ -30,8 +30,8 @@ public class TestActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.button3:
-                //intent =  new Intent(this, LoginActivity.class);
-                //startActivity(intent);
+                intent =  new Intent(this, MainActivity.class);
+                startActivity(intent);
                 break;
             case R.id.button4:
                 //intent =  new Intent(this, LoginActivity.class);
