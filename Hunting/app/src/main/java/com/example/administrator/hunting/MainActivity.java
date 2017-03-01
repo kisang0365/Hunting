@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
 
         for(int i=0; i<5; i++)
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.login), "닉네임", "나이");
+        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.basic_picture), "닉네임", "나이");
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             public void onItemClick(AdapterView parent, View v, int position, long id){
