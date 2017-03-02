@@ -3,15 +3,21 @@ package com.example.administrator.hunting;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
+import server.Connect;
 
 /**
  * Created by Administrator on 2017-02-11.
  */
 
 public class TestActivity extends AppCompatActivity {
-    @Override
+
+    Connect connect;
+
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
@@ -34,8 +40,9 @@ public class TestActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.button4:
-                //intent =  new Intent(this, LoginActivity.class);
-                //startActivity(intent);
+                Log.d("kisang","click");
+                connect = new Connect();
+                connect.execute("aaa");
                 break;
         }
     }
