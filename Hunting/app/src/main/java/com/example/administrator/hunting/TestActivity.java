@@ -5,9 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 
-import server.Connect;
+import server.LoginConnect;
 
 /**
  * Created by Administrator on 2017-02-11.
@@ -15,7 +14,7 @@ import server.Connect;
 
 public class TestActivity extends AppCompatActivity {
 
-    Connect connect;
+    LoginConnect connect;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +40,7 @@ public class TestActivity extends AppCompatActivity {
                 break;
             case R.id.button4:
                 Log.d("kisang","click");
-                connect = new Connect();
+                connect = new LoginConnect();
                 connect.execute("aaa");
                 break;
         }

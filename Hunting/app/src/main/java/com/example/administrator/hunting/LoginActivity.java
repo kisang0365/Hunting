@@ -1,5 +1,6 @@
 package com.example.administrator.hunting;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,10 @@ import android.widget.Button;
 import android.telephony.TelephonyManager;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import java.util.concurrent.ExecutionException;
+
+import server.LoginConnect;
 
 /**
  * Created by Administrator on 2017-02-11.
@@ -33,10 +38,28 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     ImageView.OnClickListener mLoginListener = new View.OnClickListener(){
-        public void onClick(View v){
-            //입장하기 클릭시 DB에서 phoneNum잇나 확인
-            Toast toast = Toast.makeText(getApplicationContext(),""+phoneNum,Toast.LENGTH_LONG);
-            toast.show();
+        public void onClick(View v) {
+            boolean login = false;
+            try {
+                //db에서 phoneNumber확인
+                login = new LoginConnect().execute(phoneNum).get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+            //있을시 main으로
+            if(login){
+                Intent intent =  new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+            //없을시 register하기
+            else{
+                Intent intent = new Intent(getApplicationContext(), RegisterAcitivty.class);
+                startActivity(intent);
+            }
+            //Toast toast = Toast.makeText(getApplicationContext(),""+phoneNum,Toast.LENGTH_LONG);
+            //toast.show();
         }
 
     };

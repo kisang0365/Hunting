@@ -3,8 +3,6 @@ package server;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.administrator.hunting.R;
-
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -18,17 +16,16 @@ import java.net.URL;
  * Created by Administrator on 2017-03-02.
  */
 
-public class Connect extends AsyncTask<String, Void, Void> {
+public class RegisterConnect extends AsyncTask<String, Void, Boolean> {
     @Override
-    public Void doInBackground(String... params) {
+    public Boolean doInBackground(String... params) {
         try {
             //요청할 주소의 파라미터의 정보를 입력.
             UrlAddress u = new UrlAddress();
             String url =  u.getUrl();
 
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("id", "123");
-            jsonObject.accumulate("password","fjskladf");
+            jsonObject.accumulate("phoneNumber", params[0]);
 
             String json = jsonObject.toString();
             //URL클래스의 생성자로 주소 넘겨줌
