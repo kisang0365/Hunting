@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.example.administrator.hunting.R;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -21,10 +22,11 @@ import java.net.URL;
 public class LoginConnect extends AsyncTask<String, Void, Boolean> {
     @Override
     public Boolean doInBackground(String... params) {
+        boolean login = false;
         try {
             //요청할 주소의 파라미터의 정보를 입력.
             UrlAddress u = new UrlAddress();
-            String url =  u.getUrl();
+            String url =  u.getLoginUrl();
 
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("phoneNumber", params[0]);
@@ -73,11 +75,13 @@ public class LoginConnect extends AsyncTask<String, Void, Boolean> {
             br.close();
 
             String res = response.toString();
-            Log.d("kisang", res);
+            JSONObject j = new JSONObject(res);
+            if(j.getString("result").equals("1")) login = true;
+            Log.d("kisang", ""+login);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return true;
+        return login;
     }
 }
