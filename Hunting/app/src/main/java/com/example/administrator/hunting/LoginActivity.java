@@ -56,6 +56,7 @@ public class LoginActivity extends AppCompatActivity {
             //없을시 register하기
             else{
                 Intent intent = new Intent(getApplicationContext(), RegisterAcitivty.class);
+                intent.putExtra("phoneNumber", phoneNum);
                 startActivity(intent);
             }
             //Toast toast = Toast.makeText(getApplicationContext(),""+phoneNum,Toast.LENGTH_LONG);

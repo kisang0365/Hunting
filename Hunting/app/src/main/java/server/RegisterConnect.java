@@ -22,10 +22,14 @@ public class RegisterConnect extends AsyncTask<String, Void, Boolean> {
         try {
             //요청할 주소의 파라미터의 정보를 입력.
             UrlAddress u = new UrlAddress();
-            String url =  u.getUrl();
+            String url =  u.getRegisterUrl();
 
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("phoneNumber", params[0]);
+            jsonObject.accumulate("id", params[1]);
+            jsonObject.accumulate("age", params[2]);
+            jsonObject.accumulate("image", params[3]);
+
 
             String json = jsonObject.toString();
             //URL클래스의 생성자로 주소 넘겨줌

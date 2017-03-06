@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,8 +18,13 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.concurrent.ExecutionException;
+
+import server.LoginConnect;
+import server.RegisterConnect;
 
 
 /**
@@ -28,8 +34,10 @@ import java.io.FileOutputStream;
 public class RegisterAcitivty extends AppCompatActivity{
 
     EditText et_id;
-    EditText et_password;
+    EditText et_age;
     ImageView iv_pic;
+    String phoneNumber;
+    String imageFile;
     private static final int PICK_FROM_CAMERA = 0;
     private static final int PICK_FROM_ALBUM = 1;
     private static final int CROP_FROM_IMAGE = 2;
@@ -43,11 +51,12 @@ public class RegisterAcitivty extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-
+        Intent intent = getIntent();
+        phoneNumber = intent.getStringExtra("phoneNumber");
 
         iv_pic = (ImageView) findViewById(R.id.iv_register_pic);
         et_id = (EditText) findViewById(R.id.et_register_id);
-        et_password = (EditText) findViewById(R.id.et_register_password);
+        et_age = (EditText) findViewById(R.id.et_register_age);
 
         Button btn_regist = (Button) findViewById(R.id.btn_register_done);
         btn_regist.setOnClickListener(mRegisterListener);
@@ -58,9 +67,34 @@ public class RegisterAcitivty extends AppCompatActivity{
 
     Button.OnClickListener mRegisterListener = new View.OnClickListener() {
         public void onClick(View v) {
-            //입장하기 클릭시 DB에서 phoneNum잇나 확인
-            Toast toast = Toast.makeText(getApplicationContext(), et_id.getText().toString() + "pass : " + et_password.getText().toString(), Toast.LENGTH_LONG);
-            toast.show();
+            String id = et_id.getText().toString();
+            String age = et_age.getText().toString();
+            String image = imageFile;
+
+            boolean register = false;
+            try {
+                //db에서 phoneNumber확인
+                register = new RegisterConnect().execute(phoneNumber, id,age,image).get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+            //있을시 main으로
+            if(register){
+                Toast toast = Toast.makeText(getApplicationContext(),"등록성공", Toast.LENGTH_LONG);
+                toast.show();
+                Intent intent =  new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+            //없을시 register하기
+            else{
+                Toast toast = Toast.makeText(getApplicationContext(),"등록실패", Toast.LENGTH_LONG);
+                toast.show();
+            }
+
+
+
         }
     };
 
@@ -190,16 +224,22 @@ public class RegisterAcitivty extends AppCompatActivity{
             copyFile.createNewFile();
             out = new BufferedOutputStream(new FileOutputStream(copyFile));
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-
             // sendBroadcast를 통해 Crop된 사진을 앨범에 보이도록 갱신한다.
             sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
                     Uri.fromFile(copyFile)));
-
+            imageFile = getStringFromBitmap(bitmap);
             out.flush();
             out.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
+    private String getStringFromBitmap(Bitmap bitmapPicture) {
+        String encodedImage;
+        ByteArrayOutputStream byteArrayBitmapStream = new ByteArrayOutputStream();
+        bitmapPicture.compress(Bitmap.CompressFormat.PNG, 100, byteArrayBitmapStream);
+        byte[] b = byteArrayBitmapStream.toByteArray();
+        encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
+        return encodedImage;
+    }
 }
